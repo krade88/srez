@@ -1,6 +1,7 @@
 <?php
 include "./PhpConnect/connect.php";
-include "./PhpTemplate/authdate.php";
+
+include ("./PhpTemplate/authdate.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,8 +118,9 @@ if ($result && $result->num_rows > 0) {
         echo '<p>Описание: ' . $row['description'] . '</p>';
         
         echo '<p>Количество: ' . $row['count'] . '</p>';
-        echo '<form method="POST">';
+        echo '<form class="formPosition" method="POST">';
         echo '<input type="hidden" name="delete_product" value="' . $row['Id'] . '">';
+        echo '<a class="btn btn-primary" href ="ItemAdmin.php?Id= '.$row['Id'].'">Подробнее</a>';
         echo '<button type="submit" class="btnDel">Удалить</button>';
         echo '</form>';
         echo '</div>';
@@ -139,6 +141,8 @@ echo '</div>';
           </div>
           <button type="submit" class="btn btn-primary">Добавить</button>
 </form>
+
+<h1>Удалить категорию</h1>
 <?php
 if (isset($_POST['delete_category'])) {
     $Id = $_POST['delete_category'];

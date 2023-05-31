@@ -1,7 +1,7 @@
 <?php
 include "../PhpConnect/connect.php";
 
-include "../PhpTemplate/authdate.php";
+include ("../PhpTemplate/authdate.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,8 +58,8 @@ include "../PhpTemplate/authdate.php";
               </div>
               <hr>
             </div>
-            <h1>Итого: 500000 рублей</h1>
-            <button type="button" class="btn btn-primary btn-lg">Оформить заказ</button>
+            <h1>Итого: 500000 рублей</h1><a href="../Pages/AccessOrder.php" class="btn btn-primary btn-lg">Оформить заказ</a>
+
           </div>
           <br>
           <a href="/Pages/Order.php">Мои заказы</a>

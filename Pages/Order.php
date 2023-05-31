@@ -1,8 +1,7 @@
 <?php
-session_start();
 include "../PhpConnect/connect.php";
 
-include "../PhpTemplate/authdate.php";
+include ("../PhpTemplate/authdate.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

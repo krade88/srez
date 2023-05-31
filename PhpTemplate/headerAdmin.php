@@ -1,4 +1,8 @@
+<?php
+include "./PhpConnect/connect.php";
 
+include ("./PhpTemplate/authdate.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +37,7 @@ document.getElementById('logout-button').addEventListener('click', function() {
   // Выполняете выход из профиля или разлогин пользователя
 
   // Удаляете все данные сеанса, включая ID
-  fetch('logout.php') // Путь к файлу, который содержит обработчик выхода (logout.php)
+  fetch('../logout.php') // Путь к файлу, который содержит обработчик выхода (logout.php)
     .then(function(response) {
       // Перенаправляете пользователя на страницу, например, на страницу входа или главную страницу
       window.location.href = '../index.php';

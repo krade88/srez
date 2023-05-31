@@ -1,7 +1,7 @@
 <?php
 include ("./PhpConnect/connect.php");
 
-include "./PhpTemplate/authdate.php";
+include ("./PhpTemplate/authdate.php");
 
 ?>
 <!DOCTYPE html>
@@ -27,13 +27,7 @@ include "./PhpTemplate/authdate.php";
 
             if ($result) {
             echo '<div Id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">';
-            echo '<ol class="carousel-indicators">';
-            $active = 'class= "active"';
-            for ($i = 0; $i < mysqli_num_rows($result); $i++) {
-                echo '<li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="' . $i . '" ' . $active . '></li>';
-                $active = '';
-            }
-            echo '</ol>';
+            
             echo '<div class="carousel-inner">';
 
             $active = 'active';

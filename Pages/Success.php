@@ -13,15 +13,12 @@ include ("../PhpTemplate/authdate.php");
 </head>
 <body>
     <?php
-    include ("../PhpTemplate/headerAdmin.php");
+    include ("../PhpTemplate/headerProfile.php");
     ?>
     
     <main>
         <div class="container">
-            <h3>Адрес: Путейская 52</h3>
-            <h3>Email: MusicHouse@gmail.com</h3>
-            <h3>Телефон: +79423423423</h3>
-            <img src="../Images/map.jpg" alt="">
+            <h1>Заказ успешно создан</h1>
         </div>
     </main>
 

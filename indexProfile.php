@@ -1,7 +1,8 @@
 <?php
 include ("./PhpConnect/connect.php");
 
-include "../PhpTemplate/authdate.php";
+include ("./PhpTemplate/authdate.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,41 +16,50 @@ include "../PhpTemplate/authdate.php";
     <?php
     include ("./PhpTemplate/headerProfile.php");
     ?>
-    
+    <h1 style="margin-left: 20%">Музыкальный дом - это место, после которого хочется петь</h1>
     <main>
-    <?php
-    $query = "SELECT * FROM product ORDER BY Id DESC LIMIT 5";
-    $result = mysqli_query($connect, $query);
-    if ($result){
-        echo '<div Id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">';
-        echo ' <div class="carousel-indicators">';
-        $active = 'class="active"';
-    for ($i= 0; $i<mysqli_num_rows($result); $i++){
-        echo '<li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="'.$i.'"'.$active.'></li>';
-    }
-    echo '<div class="carousel-inner">';
-    $active= 'active';
-    while ($row=mysqli_fetch_assoc($result)){
-        echo'<div class= "carousel-item'.$active.'">';
-        echo '<img src="'.$row['image'].'"alt="Изображение товара"';
-        echo ' <div class="carousel-caption d-none d-md-block">';
-        echo '<h3>'.$row['name'].'</h3>';
-        echo '</div>';
-        echo '</div>';
-        $active = '';
-    }
-    echo '</div>';
-  echo '<a class="carousel-control-prev" role="button" href="#carouselExampleCaptions" data-bs-slide="prev">';
-    echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-    echo '<span class="visually-hidden">Previous</span>';
-    echo '</a>';
-  echo'<a class="carousel-control-next" role="button" href="#carouselExampleCaptions" data-bs-slide="next">';
-    echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-    echo '<span class="visually-hidden">Next</span>';
-  echo '</a>';
-  echo '</div>';
-    }
-    ?>
+         <div class= "container">
+            <div class= "row">     
+         <?php
+
+            $query = "SELECT * FROM product ORDER BY Id DESC LIMIT 5";
+            $result = mysqli_query($connect, $query);
+
+            if ($result) {
+            echo '<div Id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">';
+            
+            echo '<div class="carousel-inner">';
+
+            $active = 'active';
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="carousel-item ' . $active . '">';
+                echo '<img src="' . $row['image'] . '" alt="Изображение товара">';
+                echo '<h3 style="color: black;">' . $row['name'] . '</h3>';
+                echo '<p style="color: black;">Описание: ' . $row['description'] . '</p>';
+                
+                echo '<div class="carousel-caption d-none d-md-block">';
+            
+                echo '</div>';
+                echo '</div>';
+                $active = '';
+            }
+            echo '</div>';
+            echo '<a class="carousel-control-prev" data-bs-target="#carouselExampleCaptions" type="button" data-bs-slide="prev">';
+            echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+            echo '<span class="visually-hidden">Previous</span>';
+            echo '</a>';
+            echo '<a class="carousel-control-next" data-bs-target="#carouselExampleCaptions" type="button" data-bs-slide="next">';
+            echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+            echo '<span class="visually-hidden">Next</span>';
+            echo '</a>';
+            echo '</div>';
+            
+            echo'</div>';
+            }
+        ?>
+</div>
+</div>
     </main>
 
     <?php

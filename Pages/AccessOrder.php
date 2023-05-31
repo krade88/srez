@@ -13,11 +13,11 @@ include ("../PhpTemplate/authdate.php");
 </head>
 <body>
     <?php
-    include ("../PhpTemplate/header.php");
+    include ("../PhpTemplate/headerProfile.php");
     ?>
     
     <main>
-    <form class="formRegAuth" method="POST" action="../PhpConnect/connectAuth.php">
+    <form class="formRegAuth" method="POST" action="../PhpConnect/connectAuthOrder.php">
     <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Введите логин</label>
     <input type="text" class="form-control" name="login" required id="" aria-describedby="">

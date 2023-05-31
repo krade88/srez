@@ -1,3 +1,8 @@
+<?php
+include "../PhpConnect/connect.php";
+
+include ("../PhpTemplate/authdate.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

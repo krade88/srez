@@ -15,6 +15,7 @@
     
 }
 .btnDel{
+    margin-left: 10px;
     width: 200px;
 }
 
@@ -26,10 +27,15 @@
 .contImg{
     width: 400px;
 }
-
+main{
+    justify-content: center;
+    text-align: center;
+}
 .contImg img{
     width: 400px;
     height: 400px;
    border: 3px solid red !important;
 }
-
+.formPosition{
+    flex-direction: column;
+}

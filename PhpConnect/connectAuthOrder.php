@@ -25,11 +25,8 @@ if ($result) {
         $_SESSION["user_id"] = $user["Id"];
         $_SESSION["user_role"] = $user["role"];
 
-        if ($user["role"] == "admin") {
-            header("Location: ../Admin.php ");
-            exit();
-        } else {
-            header("Location:../Pages/CatalogProfile.php");
+        if ($user["role"] == "client") {
+            header("Location: ../Pages/Success.php ");
             exit();
         }
     }
