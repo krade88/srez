@@ -27,25 +27,14 @@ include ("./PhpTemplate/authdate.php");
         
               <div class="col-md-3 text-end">
                 
-              <a href="/index.php" class="btn btn-primary" tabindex="-1" role="button" id="logout-button" aria-disabled="true">Выход</a>
+              <form action="../PhpTemplate/logout.php" method="post">
+    <input class="btn btn-primary" type="submit" value="Выход">
+</form>
               </div>
             </header>
           </div>
     </header>
-    <script>
-document.getElementById('logout-button').addEventListener('click', function() {
-  // Выполняете выход из профиля или разлогин пользователя
-
-  // Удаляете все данные сеанса, включая ID
-  fetch('../logout.php') // Путь к файлу, который содержит обработчик выхода (logout.php)
-    .then(function(response) {
-      // Перенаправляете пользователя на страницу, например, на страницу входа или главную страницу
-      window.location.href = '../index.php';
-    })
-    .catch(function(error) {
-      console.log('Ошибка при выполнении выхода:', error);
-    });
-});
+    
 </script>
 </body>
 </html>

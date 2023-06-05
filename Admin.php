@@ -3,6 +3,16 @@ include "./PhpConnect/connect.php";
 
 include ("./PhpTemplate/authdate.php");
 ?>
+<?php
+session_start();
+
+// Проверка роли пользователя
+if ($_SESSION['user_role'] !== 'admin') {
+  // Если роль не соответствует требуемой, перенаправляем пользователя на другую страницу или выводим сообщение об ошибке.
+  header('Location: ../Pages/Auth.php?message=Вы не админ');
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,44 +60,67 @@ include ("./PhpTemplate/authdate.php");
             </div>
           </div>
           <h1>Добавить товар</h1>
-          <form action= "../addItem.php" method = "POST">
-          <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите путь изображения</label>
-                    <input type="text" class="form-control" id="" name="image">
-          </div>
-          <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите имя</label>
-                    <input type="text" class="form-control" id="" name="name">
-          </div>
-          <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите цену</label>
-                    <input type="text" class="form-control" id="" name="price"  >
-          </div>
-          <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите описание</label>
-                    <input type="text" class="form-control" id="" name="description"  >
-         </div>
-         <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите страну</label>
-                    <input type="text" class="form-control" id="" name="country"  >
-         </div>
-         <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите модель</label>
-                    <input type="text" class="form-control" id="" name="model"  >
-         </div>
-         <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите год</label>
-                    <input type="text" class="form-control" id="" name="year"  >
-         </div>
-         <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Введите количество</label>
-                    <input type="text" class="form-control" id="" name="count"  >
-         </div>
-         
-        
-         
-         <button type="submit" class="btn btn-primary">Добавить</button>
-          </form>
+          <?php
+
+// Проверка, есть ли категории в базе данных
+$result = $connect->query("SELECT Id, name FROM Category");
+
+// Проверка, есть ли категории в базе данных
+if ($result !== false && $connect->affected_rows > 0) {
+    // Формирование выпадающего списка
+    echo '<form action="../PhpConnect/addItem.php" method="POST">';
+    echo 'Выберите категорию: ';
+    echo '<select name="IdCategory">';
+    
+    while ($row = $result->fetch_assoc()) {
+        $IdCategory = $row['Id'];
+        $categoryName = $row['name'];
+        echo "<option value='$IdCategory'>$categoryName</option>";
+    }
+    
+    echo '</select>';
+    
+    // Другие поля для ввода информации о товаре
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите путь изображения</label>';
+    echo '<input type="text" class="form-control" id="" name="image">';
+    echo '</div>';
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите имя</label>';
+    echo '<input type="text" class="form-control" id="" name="name">';
+    echo '</div>';
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите цену</label>';
+    echo '<input type="text" class="form-control" id="" name="price"  >';
+    echo '</div>';
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите описание</label>';
+    echo '<input type="text" class="form-control" id="" name="description"  >';
+    echo '</div>';
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите страну</label>';
+    echo '<input type="text" class="form-control" id="" name="country"  >';
+    echo '</div>';
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите модель</label>';
+    echo '<input type="text" class="form-control" id="" name="model"  >';
+    echo '</div>';
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите год</label>';
+    echo '<input type="text" class="form-control" id="" name="year"  >';
+    echo '</div>';
+    echo '<div class="mb-3">';
+    echo '<label for="exampleInputEmail1" class="form-label">Введите количество</label>';
+    echo '<input type="text" class="form-control" id="" name="count"  >';
+    echo '</div>';
+    echo '<button type="submit" class="btn btn-primary">Добавить</button>';
+    echo '</form>';
+} else {
+    echo "Нет доступных категорий.";
+}
+          
+          ?>
+          
           <div class="container">
             
 <h1>Удалить товар</h1>
@@ -120,7 +153,7 @@ if ($result && $result->num_rows > 0) {
         echo '<p>Количество: ' . $row['count'] . '</p>';
         echo '<form class="formPosition" method="POST">';
         echo '<input type="hidden" name="delete_product" value="' . $row['Id'] . '">';
-        echo '<a class="btn btn-primary" href ="ItemAdmin.php?Id= '.$row['Id'].'">Подробнее</a>';
+        echo '<a class="btn btn-primary" href ="../Pages/ItemAdmin.php?Id= '.$row['Id'].'">Подробнее</a>';
         echo '<button type="submit" class="btnDel">Удалить</button>';
         echo '</form>';
         echo '</div>';
@@ -134,10 +167,10 @@ echo '</div>';
 ?>
 </div>
 <h1>Добавить категорию</h1>
-<form action= "../addCategory.php" method = "POST">
+<form action= "../PhpConnect/addCategory.php" method = "POST">
 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Введите имя</label>
-                    <input type="text" class="form-control" id="" name="nameCat">
+                    <input type="text" class="form-control" id="" name="name">
           </div>
           <button type="submit" class="btn btn-primary">Добавить</button>
 </form>
@@ -145,14 +178,25 @@ echo '</div>';
 <h1>Удалить категорию</h1>
 <?php
 if (isset($_POST['delete_category'])) {
-    $Id = $_POST['delete_category'];
-    $query = "DELETE FROM Category WHERE Id = $Id";
-    $result = $connect->query($query);
-    if ($result) {
-        echo "Категория удалена.";
-    } else {
-        echo "Ошибка при удалении товара: " . $connect->error;
-    }
+  $categoryId = $_POST['delete_category'];
+  
+  // Удаление товаров, связанных с категорией
+  $deleteProductsQuery = "DELETE FROM product WHERE IdCategory = $categoryId";
+  $deleteProductsResult = $connect->query($deleteProductsQuery);
+  
+  if ($deleteProductsResult) {
+      // Удаление категории
+      $deleteCategoryQuery = "DELETE FROM Category WHERE Id = $categoryId";
+      $deleteCategoryResult = $connect->query($deleteCategoryQuery);
+      
+      if ($deleteCategoryResult) {
+          echo "Категория удалена успешно.";
+      } else {
+          echo "Ошибка при удалении категории: " . $connect->error;
+      }
+  } else {
+      echo "Ошибка при удалении товаров: " . $connect->error;
+  }
 }
 
 $query = "SELECT * FROM category";

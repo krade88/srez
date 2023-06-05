@@ -3,7 +3,6 @@ include "../PhpConnect/connect.php";
 
 include ("../PhpTemplate/authdate.php");
 ?>
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +22,9 @@ include ("../PhpTemplate/authdate.php");
     Отфильтровать по:
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="#">Струнные</a></li>
-    <li><a class="dropdown-item" href="#">Клавишные</a></li>
-    <li><a class="dropdown-item" href="#">Смычковые</a></li>
+    <li><a class="dropdown-item" href="?category=8">Струнные</a></li>
+    <li><a class="dropdown-item" href="?category=9">Клавишные</a></li>
+    <li><a class="dropdown-item" href="?category=4">Смычковые</a></li>
   </ul>
 </div>
 <br>
@@ -43,7 +42,15 @@ include ("../PhpTemplate/authdate.php");
 
 <br>
     <?php
-    $query = "SELECT * FROM product";
+    if (isset($_GET['category'])) {
+      $categoryId = $_GET['category'];
+      
+      // SQL-запрос с фильтрацией по выбранной категории
+      $query = "SELECT * FROM product WHERE IdCategory = $categoryId";
+  } else {
+      // Запрос без фильтрации, если категория не была выбрана
+      $query = "SELECT * FROM product";
+  }
     $result= $connect->query($query);
     echo '<div class= "row">';
     if ($result){

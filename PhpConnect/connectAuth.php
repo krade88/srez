@@ -3,6 +3,7 @@ session_start();
 // Авторизация
 include "../PhPConnect/connect.php";
 
+
 $login = $_POST["login"];
 $password = $_POST["password"];
 
@@ -23,12 +24,13 @@ if ($result) {
         // Авторизация успешна
         
         $_SESSION["user_id"] = $user["Id"];
-        $_SESSION["user_role"] = $user["role"];
 
         if ($user["role"] == "admin") {
+            $_SESSION["user_role"] = "admin";
             header("Location: ../Admin.php ");
             exit();
         } else {
+            $_SESSION["user_role"] = "client";
             header("Location:../Pages/CatalogProfile.php");
             exit();
         }
@@ -38,5 +40,4 @@ if ($result) {
 // Неверные данные аутентификации
 header("Location:../Pages/Auth.php?message=Неверные данные");
 exit();
-
 ?>

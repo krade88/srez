@@ -1,4 +1,5 @@
-<?php
+<?php 
+session_start();
 include ("./PhpConnect/connect.php");
 
 include ("./PhpTemplate/authdate.php");

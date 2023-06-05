@@ -59,7 +59,7 @@ include ("../PhpTemplate/authdate.php");
         echo '<p>Описание: '.$row['description'].'</p>';
         
         echo '<p>Количество: '.$row['count'].'</p>';
-        echo '<a href ="Item.php?Id= '.$row['Id'].'">Подробнее</a>';
+        echo '<a href ="ItemProfile.php?Id= '.$row['Id'].'">Подробнее</a>';
         echo '</div>';
         echo '</div>';
         echo '</div>';

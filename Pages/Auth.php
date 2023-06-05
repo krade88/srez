@@ -2,7 +2,9 @@
 include "../PhpConnect/connect.php";
 
 include ("../PhpTemplate/authdate.php");
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +29,9 @@ include ("../PhpTemplate/authdate.php");
     <input type="password" class="form-control" name="password" required id="" aria-describedby="">
     </div>
     <button type="submit" class="btn btn-primary">Войти</button>
+    
     </form>
+    
     </main>
 
     <?php

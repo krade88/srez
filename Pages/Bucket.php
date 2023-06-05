@@ -1,74 +1,160 @@
-<?php
-include "../PhpConnect/connect.php";
-
-include ("../PhpTemplate/authdate.php");
-?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title> MusicHouse</title>
-        <link href="/Style/style.css" rel="stylesheet">
-        <link href="/Bootstrap/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet">
-        
-        <script src="JS/bootstrap.min.js"></script>
-        <script src="JS/bootstrap.min.js.map"></script>
-        <script src="/JS/bootstrap.bundle.js"></script>
-        <script src="/JS/bootstrap.bundle.js.map"></script>
-        
-       
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicHouse - Корзина</title>
+</head>
+<body>
+    <?php
+    include "../PhpConnect/connect.php";
+    include "../PhpTemplate/headerProfile.php";
+    ?>
+
+    <main>
+        <div class="container">
+        <?php
+
+        session_start();
+
+        // Проверяем, существует ли массив корзины в сессии
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = array();
+        }
+
+        // Функция для добавления товара в корзину
+        function addToCart($productId, $quantity, $maxCount) {
+            // Проверяем, существует ли товар уже в корзине
+            if (isset($_SESSION['cart'][$productId])) {
+                // Увеличиваем количество товара
+                if ($_SESSION['cart'][$productId] + $quantity <= $maxCount) {
+                    $_SESSION['cart'][$productId] += $quantity;
+                } else {
+                    echo '<p>Достигнуто максимальное количество товара.</p>';
+                }
+            } else {
+                // Добавляем новый товар в корзину
+                $_SESSION['cart'][$productId] = $quantity;
+            }
+        }
+
+        // Обработка запроса на добавление товара в корзину
+        if (isset($_POST['add_to_cart'])) {
+            $productId = $_POST['product_id'];
+            $quantity = $_POST['quantity'];
+
+            // Получаем максимальное количество товара из базы данных
+            $query = "SELECT count FROM product WHERE Id = $productId";
+            $result = mysqli_query($connect, $query);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $maxCount = $row['count'];
+
+                // Добавляем товар в корзину
+                addToCart($productId, $quantity, $maxCount);
+            }
+        }
+
+        // Обработка запроса на увеличение количества товара
+        if (isset($_POST['increase_quantity'])) {
+            $productId = $_POST['product_id'];
+
+            // Получаем максимальное количество товара из базы данных
+            $query = "SELECT count FROM product WHERE Id = $productId";
+            $result = mysqli_query($connect, $query);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $maxCount = $row['count'];
+
+                // Увеличиваем количество товара на 1
+                addToCart($productId, 1, $maxCount);
+            }
+        }
+
+        // Обработка запроса на уменьшение количества товара
+        if (isset($_POST['decrease_quantity'])) {
+            $productId = $_POST['product_id'];
+
+            // Проверяем, существует ли товар в корзине
+            if (isset($_SESSION['cart'][$productId])) {
+                // Уменьшаем количество товара на 1
+                $_SESSION['cart'][$productId] -= 1;
+
+                // Проверяем, если количество товара стало равным 0, удаляем товар из корзины
+                if ($_SESSION['cart'][$productId] == 0) {
+                    unset($_SESSION['cart'][$productId]);
+                }
+            }
+        }
+
+        // Проверяем, есть ли товары в корзине
+        if (!empty($_SESSION['cart'])) {
+            // Получаем список идентификаторов товаров из сессии
+            $product_ids = $_SESSION['cart'];
+
+            // Преобразуем список идентификаторов в строку для использования в SQL-запросе
+            $product_ids_str = implode(',', $product_ids);
+
+            // Запрос к базе данных для получения информации о товарах в корзине
+            $query = "SELECT * FROM product WHERE Id IN ($product_ids_str)";
+            $result = mysqli_query($connect, $query);
+
+            // Вывод информации о товарах
+            if ($result && mysqli_num_rows($result) > 0) {
+                echo '<h1>Корзина</h1>';
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<div class="product">';
+                    echo '<h2>' . $row['name'] . '</h2>';
+                    echo '<img src="' . $row['image'] . '" alt="Изображение товара">';
+                    echo '<p>Цена: ' . $row['price'] . '</p>';
+                    echo '<p>Описание: ' . $row['description'] . '</p>';
+                    echo '<p>Максимальное количество: ' . $row['count'] . '</p>';
+                    echo '</div>';
+                }
+            } 
+        } 
+
+        // Отображение товаров в корзине
+        if (!empty($_SESSION['cart'])) {
+          foreach ($_SESSION['cart'] as $productId => $quantity) {
+              // Здесь выполняем запрос к базе данных для получения информации о товаре по его id
+              $query = "SELECT * FROM product WHERE Id = $productId";
+              $result = mysqli_query($connect, $query);
       
-    </head>
-    <body>
-         <!--Шапка сайта-->
-         <?php
-    include ("../PhpTemplate/headerProfile.php");
+              // Проверяем, получены ли данные о товаре
+              if ($result && mysqli_num_rows($result) > 0) {
+                  $row = mysqli_fetch_assoc($result);
+      
+                  echo '<div>';
+                  echo '<h2>' . $row['name'] . '</h2>';
+                  echo '<img src="' . $row['image'] . '" alt="Изображение товара">';
+                  echo '<p>Цена: ' . $row['price'] . '</p>';
+                  echo '<p>Описание: ' . $row['description'] . '</p>';
+                  echo '<p>Количество: ' . $quantity . '</p>';
+      
+                  echo '<form method="post">';
+                  echo '<input type="hidden" name="product_id" value="' . $productId . '">';
+                  echo '<input type="submit" name="increase_quantity" value="+">';
+                  echo '<input type="submit" name="decrease_quantity" value="-">';
+                  echo '</form>';
+      
+                  echo '</div>';
+              }
+          }
+      } else {
+          echo '<p>Корзина пуста</p>';
+      }
+        ?>
+        </div>
+    </main>
+
+    <?php
+    include "../PhpTemplate/footer.php";
     ?>
-         <!--Основная информация в корзине товаров-->
-        <main>
-          <div>
-            <h1>Корзина</h1>
-            <div class="row">
-              <div class="card" style="width: 18rem;">
-                          <img src="/Images/6ad71b6c71d1212f3222acbf9a42177a.jpeg" class="card-img-top" alt="...">
-                          <div class="card-body">
-                            <h5 class="card-title">Струнный инструмент</h5>
-                            <p class="card-text">Описание товара</p>
-                          </div>
-                          <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Цена: 100000 рублей</li>
-                          </ul>
-                          <div class="card-body">
-                            <a class="card-link">-   1   +</a>
-                          </div>
-              </div>
 
-              <div class="card" style="width: 18rem;">
-                          <img src="/Images/6b8ff4aa5dbb588a6060bdd0aa681d06.jpeg" class="card-img-top" alt="...">
-                          <div class="card-body">
-                            <h5 class="card-title">Струнный инструмент</h5>
-                            <p class="card-text">Описание товара</p>
-                          </div>
-                          <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Цена: 100000 рублей</li>
-                          </ul>
-                          <div class="card-body">
-                            <a class="card-link">-   4   +</a>
-                          </div>
-              </div>
-              <hr>
-            </div>
-            <h1>Итого: 500000 рублей</h1><a href="../Pages/AccessOrder.php" class="btn btn-primary btn-lg">Оформить заказ</a>
-
-          </div>
-          <br>
-          <a href="/Pages/Order.php">Мои заказы</a>
-
-          <?php
-    include ("../PhpTemplate/footer.php");
-    ?>
-        </main>
-       
-        <script src="JS/bootstrap.min.js"></script>
-        <script src="/JS/bootstrap.min.js.map"></script>
+</body>
 </html>
