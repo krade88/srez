@@ -31,7 +31,7 @@
                 if ($_SESSION['cart'][$productId] + $quantity <= $maxCount) {
                     $_SESSION['cart'][$productId] += $quantity;
                 } else {
-                    echo '<p>Достигнуто максимальное количество товара.</p>';
+                    echo '<p>Ошибка! Достигнуто максимальное количество товара.</p>';
                 }
             } else {
                 // Добавляем новый товар в корзину
@@ -150,6 +150,8 @@
       }
         ?>
         </div>
+        
+        <a href="../Pages/AccessOrder.php" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Подтвердить заказ</a>
     </main>
 
     <?php

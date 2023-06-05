@@ -1,7 +1,6 @@
 <?php
 include "../PhpConnect/connect.php";
 
-include ("../PhpTemplate/authdate.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +18,8 @@ include ("../PhpTemplate/authdate.php");
     <main>
         <div class="container">
             <h1>Заказ успешно создан</h1>
+            
+            <a href="../Pages/Order.php" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Посмотреть мои заказы</a>
         </div>
     </main>
 

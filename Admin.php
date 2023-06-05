@@ -1,7 +1,6 @@
 <?php
 include "./PhpConnect/connect.php";
 
-include ("./PhpTemplate/authdate.php");
 ?>
 <?php
 session_start();
@@ -153,7 +152,7 @@ if ($result && $result->num_rows > 0) {
         echo '<p>Количество: ' . $row['count'] . '</p>';
         echo '<form class="formPosition" method="POST">';
         echo '<input type="hidden" name="delete_product" value="' . $row['Id'] . '">';
-        echo '<a class="btn btn-primary" href ="../Pages/ItemAdmin.php?Id= '.$row['Id'].'">Подробнее</a>';
+        echo '<a class="btn btn-primary" href ="../Pages/ItemAdmin.php?Id= '.$row['Id'].'">Редактировать</a>';
         echo '<button type="submit" class="btnDel">Удалить</button>';
         echo '</form>';
         echo '</div>';

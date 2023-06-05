@@ -21,8 +21,9 @@
                 <li><a href="../Pages/FindUsProfile.php" class="nav-link px-2 link-dark">Где нас найти?</a></li>
               </ul>
         
-              <div class="col-md-3 text-end">
+              <div class="col-md-4 text-end">
                 
+              <a href="../Pages/Order.php" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Мои заказы</a>
               <a href="../Pages/Bucket.php" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Корзина</a>
               <a href="/index.php" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Выход</a>
               </div>

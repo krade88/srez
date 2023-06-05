@@ -1,7 +1,6 @@
 <?php
 include ("./PhpConnect/connect.php");
 
-include ("./PhpTemplate/authdate.php");
 
 ?>
 
@@ -19,6 +18,7 @@ include ("./PhpTemplate/authdate.php");
     ?>
     <h1 style="margin-left: 20%">Музыкальный дом - это место, после которого хочется петь</h1>
     <main>
+
          <div class= "container">
             <div class= "row">     
          <?php
@@ -35,7 +35,7 @@ include ("./PhpTemplate/authdate.php");
 
             while ($row = mysqli_fetch_assoc($result)) {
                 echo '<div class="carousel-item ' . $active . '">';
-                echo '<img src="' . $row['image'] . '" alt="Изображение товара">';
+                echo '<img class="imgCar" src="' . $row['image'] . '" alt="Изображение товара">';
                 echo '<h3 style="color: black;">' . $row['name'] . '</h3>';
                 echo '<p style="color: black;">Описание: ' . $row['description'] . '</p>';
                 

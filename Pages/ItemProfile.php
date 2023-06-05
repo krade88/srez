@@ -2,7 +2,6 @@
 
 session_start();
 include "../PhpConnect/connect.php";
-include "../PhpTemplate/authdate.php";
 
 // Проверяем, был ли отправлен запрос на добавление товара в корзину
 if (isset($_POST['product_id'])) {

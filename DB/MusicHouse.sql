@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 05 2023 г., 04:48
+-- Время создания: Июн 05 2023 г., 13:56
 -- Версия сервера: 10.8.4-MariaDB
--- Версия PHP: 8.0.22
+-- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -79,7 +79,8 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`Id`, `image`, `name`, `price`, `description`, `country`, `model`, `year`, `count`, `IdCategory`) VALUES
 (31, '../Images/6ad71b6c71d1212f3222acbf9a42177a.jpeg', 'Гитара чёрная', '1000', 'Крутая Очень 3', 'Россия', 'Черноматериальная', 2023, 2, 8),
-(32, '../Images/eef58e896eb2b75fa6526e15a30c74f4.png', 'Синтезатор', '1000', 'Крутой', 'Россия', 'Черноматериальный', 2023, 5, 9);
+(32, '../Images/eef58e896eb2b75fa6526e15a30c74f4.png', 'Синтезатор', '1000', 'Крутой', 'Россия', 'Черноматериальный', 2023, 5, 9),
+(33, '../Images/6ad71b6c71d1212f3222acbf9a42177a.jpeg', 'Какая-то штука', '1000', 'Крутая штука', 'Росссия', 'Т-1000', 1000, 1000, 4);
 
 -- --------------------------------------------------------
 
@@ -156,7 +157,7 @@ ALTER TABLE `Category`
 -- AUTO_INCREMENT для таблицы `product`
 --
 ALTER TABLE `product`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT для таблицы `user`

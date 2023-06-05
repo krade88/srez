@@ -1,5 +1,7 @@
 <?php
 include "../PhpConnect/connect.php";
+include "../PhpTemplate/headerAdmin.php";
+
 
 if(isset($_GET['Id'])){
     $itemId = $_GET['Id'];
@@ -23,16 +25,16 @@ if(isset($_GET['Id'])){
         </head>
         <body>
             <h1>Редактировать товар</h1>
-            <form action="../PhpConnect/update_item.php" method="POST">
-                <input type="hidden" name="itemId" value="'.$row['Id'].'">
+            <form class="formPositionItem" action="../PhpConnect/update_item.php" method="POST">
+                <input class="form-control" type="hidden" name="itemId" value="'.$row['Id'].'">
                 <label for="name">Наименование:</label>
-                <input type="text" name="name" value="'.$row['name'].'"><br>
+                <input class="form-control" type="text" name="name" value="'.$row['name'].'"><br>
                 <label for="price">Цена:</label>
-                <input type="text" name="price" value="'.$row['price'].'"><br>
+                <input class="form-control" type="text" name="price" value="'.$row['price'].'"><br>
                 <label for="description">Описание:</label>
-                <textarea name="description">'.$row['description'].'</textarea><br>
+                <input class="form-control" name="description" value="'.$row['description'].'"></input><br>
                 <label for="count">Количество:</label>
-                <input type="text" name="count" value="'.$row['count'].'"><br>
+                <input class="form-control" type="text" name="count" value="'.$row['count'].'"><br>
                 <input type="submit" value="Сохранить">
             </form>
         </body>
@@ -44,4 +46,5 @@ if(isset($_GET['Id'])){
 } else {
     echo "Некорректный идентификатор товара.";
 }
+include "../PhpTemplate/footer.php"
 ?>

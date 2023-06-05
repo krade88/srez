@@ -5738,7 +5738,7 @@ textarea.form-control-lg {
   
   flex-direction: column;
   position: relative;
-  width: 800px;
+  width: 100%;
   overflow: hidden;
 }
 .carousel-inner::after {
@@ -5748,14 +5748,11 @@ textarea.form-control-lg {
 }
 
 .carousel-item {
-  position: relative;
   display: none;
-  float: left;
   align-items: center;
   align-content: center;
   text-align: center;
-  margin-left: 50px;
-  width: 800px;
+  width: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition: transform 0.6s ease-in-out;
